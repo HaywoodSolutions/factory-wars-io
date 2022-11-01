@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './firebase';
+import HandleAuth from './components/HandleAuth';
+import LoadingPage from './components/LoadingPage';
+import SignInPage from './components/SignInPage';
+import MainRouter from './router';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const drawerWidth = 240;
+
+interface Props {
+  window?: () => Window;
 }
 
-export default App;
+export default function ResponsiveDrawer(props: Props) {
+  return (
+    <HandleAuth
+      isNotSignedIn={<SignInPage />}
+      isSignedIn={<MainRouter />}
+      loading={<LoadingPage />}
+    />
+  );
+}
