@@ -39,4 +39,4 @@ export default function RenderTilePage(props: Props) {
       </Box>
     </Box>
   );
-}
+};

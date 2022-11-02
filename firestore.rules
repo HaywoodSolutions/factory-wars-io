@@ -4,5 +4,19 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false;
     }
+    match /structures/{uid} {
+      allow read: if request.auth != null;
+    }
+
+    match /simulation/{uid} {
+      allow read: if request.auth.uid == uid;
+      
+      match /structures/{structureInstanceId} {
+        allow read: if request.auth.uid == uid && resource.data.ownerId == uid;
+        allow create: if request.auth.uid == uid
+          && resource.data.ownerId == uid
+          && exists(/databases/$(database)/documents/structures/$(resource.data.typeId));
+      }
+    }
   }
 }
