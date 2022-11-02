@@ -1,4 +1,5 @@
 import * as functions from "firebase-functions";
+import * as _ from "lodash";
 import {
   db
 } from "./admin";
@@ -58,11 +59,22 @@ const Structures: Structure[] = [
 export const setupStaticSturctures = functions.https.onRequest(async (req, res) => {
   const batch = db.batch();
 
-  Structures.map((s) => {
-    batch.set(db.collection("structures").doc(s.id), {
-      ...s
-    });
-  });
+  await Promise.all(Structures.map(async (s) => {
+    const snap = await db.collection("structures").doc(s.id).get();
+
+    if (!snap.exists) {
+      batch.set(db.collection("structures").doc(s.id), {
+        ...s
+      });
+    } else {
+      const data = snap.data();
+      if (!_.isEqual(data, s)) {
+        batch.set(db.collection("structures").doc(s.id), {
+          ...s
+        });
+      }
+    }
+  }));
 
   await batch.commit();
 
