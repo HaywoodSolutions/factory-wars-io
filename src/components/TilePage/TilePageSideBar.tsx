@@ -8,7 +8,11 @@ interface Props {
   window?: () => Window;
   setMobileOpen: (val: boolean) => void;
   mobileOpen: boolean;
-  cord: {x: number, y: number}
+  cord: {x: number, y: number},
+  structure: {
+    selectedStructure: string,
+    setStructure: (v: string) => void
+  }
 }
 
 export default function TilePageSideBar(props: Props) {
@@ -39,7 +43,7 @@ export default function TilePageSideBar(props: Props) {
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
         }}
       >
-        <SideBar cord={props.cord} />
+        <SideBar cord={props.cord} structure={props.structure}  />
       </Drawer>
       <Drawer
         variant="permanent"
@@ -49,7 +53,7 @@ export default function TilePageSideBar(props: Props) {
         }}
         open
       >
-        <SideBar cord={props.cord} />
+        <SideBar cord={props.cord} structure={props.structure} />
       </Drawer>
     </Box>
   );

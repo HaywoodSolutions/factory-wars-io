@@ -38,6 +38,7 @@ export default function ResponsiveDrawer(props: {}) {
           ]
         },
       })}
+      mapObjects={[]}
       cord={{x, y}}
       neighbours={{
         top: !!(SANDBOX_WORLDS.mapData[y - 1] && SANDBOX_WORLDS.mapData[y - 1][x]),

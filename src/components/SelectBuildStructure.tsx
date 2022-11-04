@@ -5,7 +5,6 @@ import CardContent from '@mui/material/CardContent';
 import { ButtonBase } from '@mui/material';
 
 import SVGExtension from '../logic/components/SVGExtension';
-import SVGController from '../logic/components/SVGController';
 import SVGHeadquarters from '../logic/components/SVGHeadquarters';
 
 function BasicCard(props: {title: string, description: string, svg?: JSX.Element, active: boolean, onClick?: () => void, disabled?: boolean}) {
@@ -34,16 +33,20 @@ function BasicCard(props: {title: string, description: string, svg?: JSX.Element
   );
 }
 
-export default function SelectBuildStructure() {
-  const [selectedStructure, setSelectedStructure] = React.useState<string>("");
+export default function SelectBuildStructure(props: {
+  selectedStructure: string,
+  setStructure: (v: string) => void
+}) {
+  const { selectedStructure, setStructure } = props;
+
   return (
     <div>
       <BasicCard
         title="Headquaters"
         description='Spawns creeps using energy contained in the room spawns and extensions.'
         svg={new SVGHeadquarters({}, 25).render()}
-        active={selectedStructure == "SPAWN"}
-        onClick={() => setSelectedStructure("SPAWN")}
+        active={selectedStructure == "HEADQUARTERS"}
+        onClick={() => setStructure("HEADQUARTERS")}
       />
       <BasicCard
         title="Extension"
@@ -61,7 +64,7 @@ export default function SelectBuildStructure() {
           }
         }, 25).render()}
         active={selectedStructure == "EXTENSION"}
-        onClick={() => setSelectedStructure("EXTENSION")}
+        onClick={() => setStructure("EXTENSION")}
         disabled
       />
       <BasicCard
@@ -80,7 +83,7 @@ export default function SelectBuildStructure() {
           }
         }, 25).render()}
         active={selectedStructure == "ROAD"}
-        onClick={() => setSelectedStructure("ROAD")}
+        onClick={() => setStructure("ROAD")}
       />
       <BasicCard
         title="Container"
@@ -98,7 +101,7 @@ export default function SelectBuildStructure() {
           }
         }, 25).render()}
         active={selectedStructure == "CONTAINER"}
-        onClick={() => setSelectedStructure("CONTAINER")}
+        onClick={() => setStructure("CONTAINER")}
       />
       <BasicCard
         title="Storage"
@@ -116,7 +119,7 @@ export default function SelectBuildStructure() {
           }
         }, 25).render()}
         active={selectedStructure == "STORAGE"}
-        onClick={() => setSelectedStructure("STORAGE")}
+        onClick={() => setStructure("STORAGE")}
       />
       <BasicCard
         title="Extractor"
@@ -134,7 +137,7 @@ export default function SelectBuildStructure() {
           }
         }, 25).render()}
         active={selectedStructure == "EXTRACTOR"}
-        onClick={() => setSelectedStructure("EXTRACTOR")}
+        onClick={() => setStructure("EXTRACTOR")}
       />
     </div>
   );

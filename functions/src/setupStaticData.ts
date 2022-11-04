@@ -6,7 +6,13 @@ import {
 
 type Structure = {
   id: string,
-  name: string
+  name: string,
+  description: string,
+  size: {
+    width: number,
+    height: number
+  },
+  grid: string // "0|1[]"
 } & ({
   buildable: true,
   build?: {
@@ -26,16 +32,34 @@ const Structures: Structure[] = [
   {
     id: "HEADQUATERS",
     name: "Headquarters",
+    description: "",
+    size: {
+      width: 3,
+      height: 3
+    },
+    grid: "111111111",
     buildable: true
   },
   {
     id: "RESOURCE",
     name: "Resource",
+    description: "",
+    size: {
+      width: 1,
+      height: 1
+    },
+    grid: "1",
     buildable: false
   },
   {
     id: "EXTRACTOR",
     name: "Extractor",
+    description: "",
+    size: {
+      width: 1,
+      height: 1
+    },
+    grid: "1",
     buildable: true,
     build: {
       requiresBuiltOn: "RESOURCE",
@@ -47,6 +71,12 @@ const Structures: Structure[] = [
   {
     id: "DRONE_BASE",
     name: "Drone Base",
+    description: "",
+    size: {
+      width: 2,
+      height: 2
+    },
+    grid: "1111",
     buildable: true,
     build: {
       requiresBuildings: {

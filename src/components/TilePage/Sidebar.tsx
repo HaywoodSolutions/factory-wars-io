@@ -8,7 +8,13 @@ import SelectBuildStructure from '../SelectBuildStructure';
 import SideBarUser from '../SidebarUser';
 import WorldMap from './WorldMap';
 
-const SidebarData = (cord: {x: number, y: number}): {
+const SidebarData = (
+  cord: {x: number, y: number},
+  structure: {
+    selectedStructure: string,
+    setStructure: (v: string) => void
+  }
+): {
   name: string,
   contents: () => JSX.Element
 }[] => ([
@@ -32,17 +38,22 @@ const SidebarData = (cord: {x: number, y: number}): {
     name: "Build",
     contents: () => {
       return (
-        <SelectBuildStructure />
+        <SelectBuildStructure {...structure} />
       )
     }
   }
 ]);
 
-export default function SideBar(props: {cord: {x: number, y: number}}) {
+export default function SideBar(props: {cord: {x: number, y: number},
+  structure: {
+    selectedStructure: string,
+    setStructure: (v: string) => void
+  }
+}) {
   return (
     <div>
       {
-        SidebarData(props.cord).map((v, i) => {
+        SidebarData(props.cord, props.structure).map((v, i) => {
           return (
             <Accordion style={{margin: 0}}>
               <AccordionSummary

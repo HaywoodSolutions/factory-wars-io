@@ -8,6 +8,10 @@ export type MapObject = {
   object: JSX.Element,
   width: number,
   height: number,
+  offset?: {
+    x: number,
+    y: number
+  }
   opacity?: number
 };
 
@@ -24,6 +28,16 @@ interface Props {
     right?: boolean
     bottom?: boolean
     left?: boolean
+  }
+  cursor: {
+    value: {
+      x: number,
+      y: number
+    } | null,
+    set: (val: {
+      x: number,
+      y: number
+    } | null) => void
   }
 }
 
@@ -69,13 +83,11 @@ export default function GameContainer(props: Props) {
   } = props;
 
   const onHoverHandler = (cord?: {x: number, y: number}) => {
-    setCord(cord || null);
+    props.cursor.set(cord || null);
     onHover && onHover(cord);
   }
 
-  const [cord, setCord] = React.useState<{x: number, y: number}|null>(null);
-
-  const vCord = cord ? curserPos(cord) : null;
+  const vCord = props.cursor.value ? curserPos(props.cursor.value) : null;
 
   const ref = React.createRef<any>();
   return (
@@ -101,7 +113,7 @@ export default function GameContainer(props: Props) {
           <div style={{position: 'absolute', left: 0, top: 0, height: '100%', width: "100%", pointerEvents: 'none', display: 'flex', justifyContent: 'center'}}>
             {props.mapObjects?.map((v, i) => {
               return (
-                <div style={{position: 'absolute', left: `${v.x * 2}%`, top: `${v.y * 2}%`, height: `${v.height * 2}%`, width: `${v.width * 2}%`, opacity: v.opacity}}>
+                <div style={{position: 'absolute', left: `${(v.x + (v.offset?.x || 0)) * 2}%`, top: `${(v.y + (v.offset?.y || 0)) * 2}%`, height: `${v.height * 2}%`, width: `${v.width * 2}%`, opacity: v.opacity}}>
                   {v.object}
                 </div>
               )
